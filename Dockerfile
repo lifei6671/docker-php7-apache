@@ -17,16 +17,14 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install bz2 \
     && docker-php-ext-install ctype \
     && docker-php-ext-install mbstring \
-    && docker-php-ext-install mhash \
-    && docker-php-ext-install mysql \
     && docker-php-ext-install zip
     
-
 RUN git clone --branch php7 https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
   && cd /usr/src/php/ext/memcached \
   && docker-php-ext-configure memcached \
   && docker-php-ext-install memcached 
 
-RUN apt-get -y remove git
+RUN apt-get -y remove git \
+	&& apt-get clean
 
 COPY config/php.ini /usr/local/etc/php/
